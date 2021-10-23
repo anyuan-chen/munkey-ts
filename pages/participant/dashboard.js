@@ -7,6 +7,7 @@ import {
   AuthAction,
   getFirebaseAdmin,
 } from "next-firebase-auth";
+import Link from "next/link";
 
 const Dashboard = ({ delegateName, resources, messages }) => {
   //resources into list
@@ -21,15 +22,23 @@ const Dashboard = ({ delegateName, resources, messages }) => {
   const messagesArray = messages.map((message) => {
     if (message.read) {
       return (
-        <div className="py-2 ">
-          <li className="font-main">{message.subject}</li>
-        </div>
+        <Link href={`/messages/${message.id}`}>
+          <a>
+            <div className="py-2 ">
+              <li className="font-main">{message.subject}</li>
+            </div>
+          </a>
+        </Link>
       );
     } else {
       return (
-        <div className="py-4 shadow rounded-2xl">
-          <li className="font-main px-2">{message.subject}</li>
-        </div>
+        <Link href={`/messages/${message.id}`}>
+          <a>
+            <div className="py-4 shadow rounded-2xl">
+              <li className="font-main px-2">{message.subject}</li>
+            </div>
+          </a>
+        </Link>
       );
     }
   });
@@ -113,7 +122,6 @@ export const getServerSideProps = withAuthUserTokenSSR({
       });
     });
 
-  console.log(messageSentQuery, messageRecievedQuery);
 
   return {
     props: {

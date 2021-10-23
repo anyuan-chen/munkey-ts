@@ -23,9 +23,11 @@ export const getServerSideProps = withAuthUserTokenSSR({
     .where("email", "==", AuthUser.email)
     .get()
     .then((querySnapshot) => {
-      return querySnapshot.docs.map((doc) => {
-        return doc.data().level;
-      });
+      if (querySnapshot) {
+        return querySnapshot.docs.map((doc) => {
+          return doc.data().level;
+        });
+      }
     });
   if (query[0] === "participant") {
     return {
