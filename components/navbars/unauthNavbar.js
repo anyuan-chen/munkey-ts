@@ -6,7 +6,7 @@ export default function UnauthNavbar() {
       <nav className="h-32 bg-main grid-cols-5 grid">
         <Link href="/">
           <a className="flex justify-center items-center ">
-            <h1 className="text-5xl text-white font-main">Munkey</h1>
+            <h1 className="text-5xl text-white font-main font-bold">Munkey</h1>
           </a>
         </Link>
       </nav>

@@ -8,9 +8,10 @@ import {
   getFirebaseAdmin,
 } from "next-firebase-auth";
 import { useRouter } from "next/router";
+import UnauthNavbar from "../../components/navbars/unauthNavbar";
 
 function Message({ message }) {
-  return <div>{message.id}</div>;
+  return <UnauthNavbar></UnauthNavbar>;
 }
 
 const MyLoader = () => {
