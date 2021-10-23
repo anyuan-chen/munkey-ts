@@ -6,35 +6,29 @@ import {
   withAuthUserTokenSSR,
   AuthAction,
 } from "next-firebase-auth";
+import UnauthNavbar from "../components/navbars/unauthNavbar";
+import Link from "next/link";
 
 const LoginPage = ({ email }) => {
   const AuthUser = useAuthUser();
   return (
     <div>
-      <nav>
-        <h1 className="">Munkey</h1>
-      </nav>
-      <p>Your email is {email}.</p>
+      <UnauthNavbar></UnauthNavbar>
+      <main className="flex justify-center">
+        <div className="w-screen/2 flex flex-col space-y-4">
+          <h1 className="text-3xl pt-32">I am a(n)</h1>
+          <button className="bg-main text-white font-main rounded-lg py-2">
+            <Link href="/login">participant</Link>
+          </button>
+          <button className="bg-main text-white font-main rounded-lg py-2">
+            <Link href="/login">administrator</Link>
+          </button>
+        </div>
+      </main>
     </div>
   );
 };
 
 // Note that this is a higher-order function.
-export const getServerSideProps = withAuthUserTokenSSR({
-  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})(async ({ AuthUser, req }) => {
-  return {
-    props: {
-      email: AuthUser.email,
-    },
-  };
-});
 
-const MyLoader = () => <div>Loading...</div>;
-
-export default withAuthUser({
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
-  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
-  whenUnauthedAfterInit: AuthAction.RENDER,
-  LoaderComponent: MyLoader,
-})(LoginPage);
+export default withAuthUser()(LoginPage);
