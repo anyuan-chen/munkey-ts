@@ -8,16 +8,58 @@ import {
   getFirebaseAdmin,
 } from "next-firebase-auth";
 
-const Dashboard = ({ delegateName, resources }) => {
+const Dashboard = ({ delegateName, resources, messages }) => {
+  //resources into list
   const resourceArray = resources.map((resource) => {
-    return <li> {resource.amount} {resource.name} </li>;
+    return (
+      <li className="font-main">
+        <span className="font-semibold">{resource.amount}</span> {resource.name}
+      </li>
+    );
+  });
+
+  const messagesArray = messages.map((message) => {
+    if (message.read) {
+      return (
+        <div className="py-2 ">
+          <li className="font-main">{message.subject}</li>
+        </div>
+      );
+    } else {
+      return (
+        <div className="py-4 shadow rounded-2xl">
+          <li className="font-main px-2">{message.subject}</li>
+        </div>
+      );
+    }
   });
   return (
     <div>
       <AuthUserNavbar delegateName={delegateName}></AuthUserNavbar>
-      <main>
-        <ul>{resourceArray}</ul>
-      </main>
+      <div className="flex items-center ">
+        <main className="grid grid-cols-5 h-screen-30 w-screen ">
+          <div className="m-5 flex flex-col items-center">
+            <h2 className="text-2xl font-main font-semibold pb-4">
+              Your Resources:{" "}
+            </h2>
+
+            <ul className="  flex flex-col p-8 border space-y-4 rounded-2xl">
+              {resourceArray}
+            </ul>
+          </div>
+          <div className="col-span-4 my-5 mr-5 col-start-2">
+            <h2 className="text-2xl font-main font-semibold pb-4">
+              Your Messages:{" "}
+            </h2>
+            <div className="border rounded-2xl overflow-y-scroll h-screen-30">
+              <ul>{messagesArray}</ul>
+            </div>
+            <button className="font-thin bg-main rounded-full px-8 py-2 text-white mt-2">
+              Create
+            </button>
+          </div>
+        </main>
+      </div>
     </div>
   );
 };
@@ -30,10 +72,9 @@ const MyLoader = () => {
 export const getServerSideProps = withAuthUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async ({ AuthUser }) => {
-
-  //fetching the user information (delegate name, resources) 
+  //fetching the user information (delegate name, resources)
   const db = getFirebaseAdmin().firestore();
-  const query = await db
+  const userquery = await db
     .collection("users")
     .where("email", "==", AuthUser.email)
     .get()
@@ -45,16 +86,40 @@ export const getServerSideProps = withAuthUserTokenSSR({
 
   //converting resources from object to array
   const resourceArray = [];
-  for (const resource in query[0].resources) {
+  for (const resource in userquery[0].resources) {
     resourceArray.push({
       name: resource,
-      amount: query[0].resources[resource],
+      amount: userquery[0].resources[resource],
     });
   }
+
+  const messageSentQuery = await db
+    .collection("private-directives")
+    .where("reciepient", "==", AuthUser.email)
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return doc.data();
+      });
+    });
+
+  const messageRecievedQuery = await db
+    .collection("private-directives")
+    .where("sender", "==", AuthUser.email)
+    .get()
+    .then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => {
+        return doc.data();
+      });
+    });
+
+  console.log(messageSentQuery, messageRecievedQuery);
+
   return {
     props: {
-      delegateName: query[0].delegateName,
+      delegateName: userquery[0].delegateName,
       resources: resourceArray,
+      messages: messageSentQuery.concat(messageRecievedQuery),
     },
   };
 });

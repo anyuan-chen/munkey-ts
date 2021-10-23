@@ -9,7 +9,7 @@ export default function AuthUserNavbar({ delegateName }) {
             <h1 className="text-5xl font-bold text-white font-main">Munkey</h1>
           </a>
         </Link>
-        <h2 className="text-3xl font-bold text-supersub font-main flex items-center justify-center col-start-2">
+        <h2 className="text-3xl font-bold text-supersub font-main flex items-center col-start-2">
           You are: &nbsp; <span className="text-white">{delegateName}</span>
         </h2>
       </nav>
