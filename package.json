@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.4",
-    "firebase": "^9.1.3",
-    "firebase-admin": "^10.0.0",
+    "firebase": "8.10.0",
+    "firebase-admin": "9.11.0",
     "next": "latest",
     "next-firebase-auth": "^0.13.4",
     "react": "^17.0.2",

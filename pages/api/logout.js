@@ -1,5 +1,5 @@
 import { unsetAuthCookies } from "next-firebase-auth";
-import initAuth from "../../initAuth"; // the module you created above
+import initAuth from "../../util/initAuth"; // the module you created above
 
 initAuth();
 
