@@ -23,12 +23,13 @@ export const getServerSideProps = withAuthUserTokenSSR({
     .where("email", "==", AuthUser.email)
     .get()
     .then((querySnapshot) => {
-      if (querySnapshot) {
+      if (querySnapshot != undefined) {
         return querySnapshot.docs.map((doc) => {
           return doc.data().level;
         });
       }
     });
+  console.log(query);
   if (query[0] === "participant") {
     return {
       redirect: {
