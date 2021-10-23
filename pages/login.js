@@ -1,5 +1,5 @@
 // ./pages/demo
-import React from "react";
+import React, { useState } from "react";
 import {
   useAuthUser,
   withAuthUser,
@@ -7,26 +7,44 @@ import {
   AuthAction,
 } from "next-firebase-auth";
 import UnauthNavbar from "../components/navbars/unauthNavbar";
+import firebase from "firebase/app";
+import "firebase/auth";
 
-const LoginPage = ({ email }) => {
-  const AuthUser = useAuthUser();
+const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const login = (event) => {
+    event.preventDefault();
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        var user = userCredential.user;
+      });
+  };
   return (
     <div>
       <UnauthNavbar />
       <div className="flex justify-center">
-        <form className="w-screen/3 flex flex-col space-y-4">
+        <form className="w-screen/3 flex flex-col space-y-4" onSubmit={login}>
           <h1 className="text-3xl font-main pt-32">Login</h1>
-          <input type="text" className="rounded-lg" placeholder="email"></input>
+          <input
+            type="text"
+            className="rounded-lg"
+            placeholder="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          ></input>
           <input
             type="password"
             className="rounded-lg"
             placeholder="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
           ></input>
-          <button
-            type="submit"
-            className="bg-main text-white font-main rounded-lg py-2"
-          >
-            Enter
+          <button className="text-white bg-main py-2 rounded-lg">
+            {" "}
+            Enter{" "}
           </button>
         </form>
       </div>

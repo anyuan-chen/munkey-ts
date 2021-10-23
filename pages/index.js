@@ -8,21 +8,27 @@ import {
 } from "next-firebase-auth";
 import UnauthNavbar from "../components/navbars/unauthNavbar";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-const LoginPage = ({ email }) => {
-  const AuthUser = useAuthUser();
+const HomePage = ({ email }) => {
+  const router = useRouter();
+
   return (
     <div>
       <UnauthNavbar></UnauthNavbar>
       <main className="flex justify-center">
         <div className="w-screen/2 flex flex-col space-y-4">
           <h1 className="text-3xl pt-32">I am a(n)</h1>
-          <button className="bg-main text-white font-main rounded-lg py-2">
-            <Link href="/login">participant</Link>
-          </button>
-          <button className="bg-main text-white font-main rounded-lg py-2">
-            <Link href="/login">administrator</Link>
-          </button>
+          <Link href="/login">
+            <button className="bg-main rounded-lg py-2 font-main text-white">
+              participant
+            </button>
+          </Link>
+          <Link href="/login">
+            <button className="bg-main rounded-lg py-2 font-main text-white">
+              administrator
+            </button>
+          </Link>
         </div>
       </main>
     </div>
@@ -31,4 +37,4 @@ const LoginPage = ({ email }) => {
 
 // Note that this is a higher-order function.
 
-export default withAuthUser()(LoginPage);
+export default withAuthUser()(HomePage);
