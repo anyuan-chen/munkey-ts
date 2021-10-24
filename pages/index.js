@@ -4,6 +4,7 @@ import {
   useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
+  whenAuthed,
   AuthAction,
 } from "next-firebase-auth";
 import UnauthNavbar from "../components/navbars/unauthNavbar";
@@ -37,4 +38,6 @@ const HomePage = ({ email }) => {
 
 // Note that this is a higher-order function.
 
-export default withAuthUser()(HomePage);
+export default withAuthUser({ whenAuthed: AuthAction.REDIRECT_TO_APP })(
+  HomePage
+);

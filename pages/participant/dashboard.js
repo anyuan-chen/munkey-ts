@@ -94,13 +94,13 @@ export const getServerSideProps = withAuthUserTokenSSR({
     });
 
   //converting resources from object to array
-  const resourceArray = [];
-  for (const resource in userquery[0].resources) {
-    resourceArray.push({
-      name: resource,
-      amount: userquery[0].resources[resource],
-    });
-  }
+  // const resourceArray = [];
+  // for (const resource in userquery[0].resources) {
+  //   resourceArray.push({
+  //     name: resource,
+  //     amount: userquery[0].resources[resource],
+  //   });
+  // }
 
   const messageSentQuery = await db
     .collection("private-directives")
@@ -122,11 +122,10 @@ export const getServerSideProps = withAuthUserTokenSSR({
       });
     });
 
-
   return {
     props: {
       delegateName: userquery[0].delegateName,
-      resources: resourceArray,
+      resources: userquery[0].resources,
       messages: messageSentQuery.concat(messageRecievedQuery),
     },
   };
