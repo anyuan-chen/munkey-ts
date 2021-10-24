@@ -28,6 +28,13 @@ const Dashboard = () => {
               </li>
             </a>
           </Link>
+          <Link href="/admin/manage">
+            <a>
+              <li className="py-8 bg-gray-50 rounded-full m-8 pl-4 font-semibold text-lg">
+                Assign Crisis Managers
+              </li>
+            </a>
+          </Link>
         </ul>
       </main>
     </div>

@@ -10,6 +10,14 @@ import {
   getFirebaseAdmin,
 } from "next-firebase-auth";
 
+/*
+  REDO UX
+
+  ADD BUTTON MOVED TO BOTTOM
+  TITLE BOLDED 
+  SPACING
+
+*/
 export default function Participant() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -102,12 +110,6 @@ export default function Participant() {
           ></input>
           <div className="flex justify-between pt-4">
             <h2 className="text-xl font-main"> Resource Information</h2>
-            <button
-              className="border rounded-xl border-black px-4 "
-              onClick={addResource}
-            >
-              Add
-            </button>
           </div>
           <div>
             <div className="grid grid-cols-2 gap-4">
@@ -128,6 +130,12 @@ export default function Participant() {
             </div>
             <ul className="space-y-4 pt-4">{resourceComponents}</ul>
           </div>
+          <button
+            className="border rounded-xl border-black px-4 py-2 "
+            onClick={addResource}
+          >
+            Add A New Resource
+          </button>
           <button
             className="text-white bg-main py-2 font-main rounded-lg"
             type="submit"
