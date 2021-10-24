@@ -10,9 +10,10 @@ import { getAuth } from "firebase-admin";
 
 const handler = async (req, res) => {
   console.log("hidsfds");
+  const db = getFirebaseAdmin().firestore();
   try {
-
-    getAuth()
+    getFirebaseAdmin()
+      .auth()
       .createUser({
         email: req.body.email,
         password: req.body.password,
