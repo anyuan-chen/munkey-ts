@@ -44,6 +44,13 @@ export const getServerSideProps = withAuthUserTokenSSR({
         permanent: false,
       },
     };
+  } else if (query[0] === "manager") {
+    return {
+      redirect: {
+        destination: "/manager/dashboard",
+        permanent: false,
+      },
+    };
   }
   return {
     props: {},
