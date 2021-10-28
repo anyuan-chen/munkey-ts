@@ -19,7 +19,7 @@ const HomePage = ({ email }) => {
       <UnauthNavbar></UnauthNavbar>
       <main className="flex justify-center">
         <div className="w-screen/2 flex flex-col space-y-4">
-          <h1 className="text-3xl pt-32">I am a(n)</h1>
+          <h1 className="text-3xl pt-32 font-main">I am a(n)</h1>
           <Link href="/login">
             <button className="bg-main rounded-lg py-2 font-main text-white">
               participant

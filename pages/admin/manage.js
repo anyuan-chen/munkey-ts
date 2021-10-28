@@ -67,7 +67,7 @@ export default function Manage({ participants, managers }) {
         </ul>
       </div>
     );
-  });
+  });  
   return (
     <div>
       <AdminNavbar></AdminNavbar>
